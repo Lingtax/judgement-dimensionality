@@ -38,7 +38,9 @@ df <-  tibble(obs = letters[1:4],
 p <-  ggplot(df, aes(x,y)) + 
   geom_point() + 
   geom_label(aes(label = obs), nudge_x = .05) +
-  theme_bw()
+  theme_bw() + 
+  scale_x_continuous(breaks = 1:2) +
+  scale_y_continuous(breaks = 1:2)
 
 p + geom_line(aes(y = flat), colour = "red") + 
   geom_linerange(aes(ymin = y, ymax = flat), linetype = "dashed") + labs(caption = "In this axis, a and d, are equivalent, as are  b and c.")
@@ -48,7 +50,36 @@ p + geom_line(aes(y = flat), colour = "red") +
 
 ``` r
 p + geom_line(aes(y = pos), colour = "red") + 
-  geom_segment(aes(y = y, yend = posy, x=x, xend = posx), linetype = "dashed") + labs(caption = "In this axis, d and c are equivalent.")
+  geom_segment(aes(y = y, yend = posy, x=x, xend = posx), linetype = "dashed") + labs(caption = "In this axis, d and c are equivalent despite having the equal largest euclidean distance of any pair of points.")
 ```
 
 ![](readme_files/figure-gfm/primary-axis-2.png)<!-- -->
+
+A stupidly late realisation is that this can be represented by the
+variation in weights of the underlying dimensions on the dimension of
+judgement. For the two scenarios presented above.
+
+``` r
+library(igraph)
+
+g1 <- graph.formula("x" -+ "judgement",
+                    "y" -+ "judgement",
+                      simplify = TRUE)
+E(g1)$label <- c(1, 0) 
+g1$layout <- layout_in_circle(g1)
+
+plot(g1, size = 90)
+```
+
+![](readme_files/figure-gfm/dags-1.png)<!-- -->
+
+``` r
+g2 <- graph.formula("x" -+ "judgement",
+                    "y" -+ "judgement",
+                      simplify = TRUE)
+E(g2)$label <- c(1, 1) 
+g2$layout <- layout_in_circle(g2)
+plot(g2, size = 90)
+```
+
+![](readme_files/figure-gfm/dags-2.png)<!-- -->
