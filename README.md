@@ -31,7 +31,9 @@ df <-  tibble(obs = letters[1:4],
               x = c(1,2,2,1), 
               y = rep(1:2, 2), 
               flat = rep(1.5, 4),
-              pos = c(1, 2, 2, 1))
+              pos = c(1, 2, 2, 1), 
+              posx = c(1,2,1.5, 1.5),
+              posy = posx)
 
 p <-  ggplot(df, aes(x,y)) + 
   geom_point() + 
@@ -46,7 +48,7 @@ p + geom_line(aes(y = flat), colour = "red") +
 
 ``` r
 p + geom_line(aes(y = pos), colour = "red") + 
-  geom_linerange(aes(ymin = y, ymax = pos), linetype = "dashed") + labs(caption = "In this axis, d and c are equivalent.")
+  geom_segment(aes(y = y, yend = posy, x=x, xend = posx), linetype = "dashed") + labs(caption = "In this axis, d and c are equivalent.")
 ```
 
 ![](readme_files/figure-gfm/primary-axis-2.png)<!-- -->
