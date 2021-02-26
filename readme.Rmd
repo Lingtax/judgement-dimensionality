@@ -34,8 +34,8 @@ p <-  ggplot(df, aes(x,y)) +
   geom_point() + 
   geom_label(aes(label = obs), nudge_x = .05) +
   theme_bw() + 
-  scale_x_continuous(breaks = 1:2) +
-  scale_y_continuous(breaks = 1:2)
+  scale_x_continuous(breaks = 1:2, labels = c("", "")) +
+  scale_y_continuous(breaks = 1:2, labels = c("", ""))
 
 p + geom_line(aes(y = flat), colour = "red") + 
   geom_linerange(aes(ymin = y, ymax = flat), linetype = "dashed") + labs(caption = "In this axis, a and d, are equivalent, as are  b and c.")
